@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling and Modeling Data - Interactive Lesson</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e67e22;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --text: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .lesson-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .lesson-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        h1, h2, h3 { color: var(--primary); }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-prev { background: #95a5a6; color: white; }
+        .btn-next { background: var(--secondary); color: white; }
+        button:hover { opacity: 0.9; }
+
+        .objectives-list, .resources-list {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .interactive-box {
+            border: 2px dashed var(--secondary);
+            padding: 20px;
+            margin: 20px 0;
+            background: #fcfcfc;
+        }
+
+        .chart-option {
+            display: inline-block;
+            width: 100px;
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .chart-option.selected {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tally-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tally-table th, .tally-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .status-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Handling and Modeling Data</h1>
+    <p>ICT / Data Management Lesson</p>
+</header>
+
+<div class="container">
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Intro / Objectives -->
+    <div class="lesson-card active" id="step0">
+        <h2>Lesson Overview</h2>
+        <div class="objectives-list">
+            <h3>Lesson Objectives:</h3>
+            <ul>
+                <li>Carry out a full investigation by gathering peer data.</li>
+                <li>Organize raw data into structured tables.</li>
+                <li>Input data and decide on the best display methods.</li>
+                <li>Plan visual formatting (headers/colors) for a data model.</li>
+            </ul>
+        </div>
+        <div class="resources-list">
+            <h3>Resources Needed:</h3>
+            <ul>
+                <li>Data capture forms (from previous lesson).</li>
+                <li>Computers/Tablets with spreadsheet software.</li>
+                <li>Design and planning area.</li>
+            </ul>
+        </div>
+        <p>Total Duration: <strong>80 Minutes</strong></p>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="lesson-card" id="step1">
+        <div class="timer" id="timer1">25:00</div>
+        <h2>1. The Investigation Phase</h2>
+        <p>This is where we gather our "Raw Data".</p>
+        <ul>
+            <li><strong>Self-Completion:</strong> Complete your own form first.</li>
+            <li><strong>Data Collection:</strong> Pass your forms around the room. Ensure <em>everyone</em> in class responds to your form.</li>
+            <li><strong>Quality Check:</strong> Once you get your form back, verify every classmate has provided a response.</li>
+        </ul>
+        <div class="interactive-box">
+            <p><strong>Checklist:</strong></p>
+            <input type="checkbox"> I have completed my own form.<br>
+            <input type="checkbox"> Every classmate has signed/answered my form.<br>
+            <input type="checkbox"> I have verified the quality of the data (no missing cells).
+        </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="lesson-card" id="step2">
+        <div class="timer" id="timer2">15:00</div>
+        <h2>2. Organizing and Categorizing</h2>
+        <p>Raw data is messy. Let's turn it into a <strong>Concise Table</strong>.</p>
+        <p>Review your results (e.g., a list of names under colors). Working with a partner, define your headers.</p>
+        
+        <div class="interactive-box">
+            <h3>Drafting your Table Structure:</h3>
+            <table class="tally-table">
+                <thead>
+                    <tr>
+                        <th>Header 1 (e.g. Category)</th>
+                        <th>Header 2 (e.g. Total Count)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="e.g. Blue" style="width:90%"></td>
+                        <td><input type="number" placeholder="0" style="width:90%"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="e.g. Red" style="width:90%"></td>
+                        <td><input type="number" placeholder="0" style="width:90%"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="lesson-card" id="step3">
+        <div class="timer" id="timer3">20:00</div>
+        <h2>3. Spreadsheet Planning and Design</h2>
+        <p>Before touching the computer, we must <strong>Plan</strong> the visual model.</p>
+        
+        <h3>Choose your Chart Type:</h3>
+        <div id="chartOptions">
+            <div class="chart-option" onclick="selectChart(this)">Pie Chart</div>
+            <div class="chart-option" onclick="selectChart(this)">Bar Graph</div>
+            <div class="chart-option" onclick="selectChart(this)">Line Graph</div>
+        </div>
+        <p id="chartJustification" style="font-style: italic; color: #666; margin-top:10px;"></p>
+
+        <h3>Visual Formatting Plan:</h3>
+        <div class="interactive-box">
+            <label>Header Style:</label>
+            <select>
+                <option>Bold Text</option>
+                <option>Italic Text</option>
+                <option>Large Font</option>
+            </select>
+            <br><br>
+            <label>Cell Fill Color:</label>
+            <input type="color" value="#3498db">
+        </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="lesson-card" id="step4">
+        <div class="timer" id="timer4">15:00</div>
+        <h2>4. Digital Entry and Implementation</h2>
+        <p>Now, move to your device and start the <strong>Modeling</strong>.</p>
+        <ul>
+            <li><strong>Data Entry:</strong> Type your organized table into the spreadsheet.</li>
+            <li><strong>Modeling:</strong> Apply the colors, bold headers, and insert the chart you selected in the previous step.</li>
+        </ul>
+        <div class="interactive-box" style="text-align: center; border-style: solid;">
+            <p>💻 <em>Classroom Activity in Progress...</em></p>
+        </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="lesson-card" id="step5">
+        <div class="timer" id="timer5">05:00</div>
+        <h2>5. Conclusion and Storage</h2>
+        <p>Well done! Don't worry about finishing everything today.</p>
+        <div class="resources-list" style="border-left: 5px solid var(--accent);">
+            <p><strong>⚠️ Data Security:</strong> Keep your physical data capture forms in a safe place. You will need them for the next lesson to finalize your work!</p>
+        </div>
+        
+        <h3>Assessment Reflection:</h3>
+        <ul>
+            <li>Can you accurately tally your raw data?</li>
+            <li>Can you justify your chart choice?</li>
+        </ul>
+    </div>
+
+    <div class="controls">
+        <button class="btn-prev" id="prevBtn" onclick="changeStep(-1)">Previous</button>
+        <button class="btn-next" id="nextBtn" onclick="changeStep(1)">Next Step</button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 0;
+    const totalSteps = 6;
+    const timers = {
+        1: 25 * 60,
+        2: 15 * 60,
+        3: 20 * 60,
+        4: 15 * 60,
+        5: 5 * 60
+    };
+    let interval;
+
+    function updateProgress() {
+        const progress = (currentStep / (totalSteps - 1)) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        
+        // Button visibility
+        document.getElementById('prevBtn').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').innerText = currentStep === totalSteps - 1 ? 'Finish Lesson' : 'Next Step';
+    }
+
+    function startTimer(step) {
+        clearInterval(interval);
+        if (!timers[step]) return;
+        
+        let timeLeft = timers[step];
+        const timerDisplay = document.getElementById(`timer${step}`);
+        
+        interval = setInterval(() => {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) clearInterval(interval);
+            timeLeft--;
+        }, 1000);
+    }
+
+    function changeStep(n) {
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        currentStep += n;
+        
+        if (currentStep >= totalSteps) {
+            alert("Lesson Complete! Please ensure all data forms are stored safely.");
+            currentStep = totalSteps - 1;
+        }
+        
+        document.getElementById(`step${currentStep}`).classList.add('active');
+        updateProgress();
+        if (timers[currentStep]) startTimer(currentStep);
+    }
+
+    function selectChart(el) {
+        document.querySelectorAll('.chart-option').forEach(opt => opt.classList.remove('selected'));
+        el.classList.add('selected');
+        
+        const justification = document.getElementById('chartJustification');
+        const chartType = el.innerText;
+        
+        if(chartType === "Pie Chart") justification.innerText = "Best for showing parts of a whole (percentages).";
+        if(chartType === "Bar Graph") justification.innerText = "Best for comparing different categories.";
+        if(chartType === "Line Graph") justification.innerText = "Best for showing changes over time.";
+    }
+
+    // Initialize
+    updateProgress();
+</script>
+
+</body>
+</html>
