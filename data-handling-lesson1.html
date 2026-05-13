@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lesson: Data Handling & Modelling</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e67e22;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --text: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #ccc;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            flex: 1;
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            width: 90%;
+        }
+
+        .lesson-section {
+            display: none;
+        }
+
+        .lesson-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 { color: var(--primary); }
+        .timer { font-weight: bold; color: var(--accent); float: right; }
+
+        .btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .btn:hover { background: #2980b9; }
+        .btn-prev { background: #95a5a6; }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .case-study-box {
+            background: #fdf2e9;
+            border-left: 5px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .form-builder {
+            border: 2px dashed #ccc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .reflection-card {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Handling and Modelling Data</h1>
+    <p>ICT / Data Literacy Intro</p>
+</header>
+
+<div class="progress-container">
+    <div id="progress-bar"></div>
+</div>
+
+<main>
+    <!-- Section 1: Intro -->
+    <section id="section1" class="lesson-section active">
+        <span class="timer">15 Minutes</span>
+        <h2>1. Introduction to Research</h2>
+        <p>How well do you know your classmates? Data handling starts with asking questions!</p>
+        
+        <div class="case-study-box">
+            <h3>Key Term: Respondent</h3>
+            <p><strong>Definition:</strong> A person who replies to a questionnaire or data capture form.</p>
+        </div>
+
+        <h3>Discussion Activity</h3>
+        <p>Think about something you want to discover about the people in this room. Is it their favorite sport? Their preferred snacks? </p>
+        <textarea placeholder="Type some research ideas here..."></textarea>
+        
+        <p><em>Goal: Today we will design an investigation to collect and handle this data accurately.</em></p>
+    </section>
+
+    <!-- Section 2: Case Study -->
+    <section id="section2" class="lesson-section">
+        <span class="timer">15 Minutes</span>
+        <h2>2. Case Study: The "Colours" Investigation</h2>
+        <p>Let's look at a successful example.</p>
+        
+        <div class="case-study-box">
+            <p><strong>Topic:</strong> Favourite Colours</p>
+            <p><strong>The Statement:</strong> "My favourite colour is..."</p>
+            <p><strong>Data Items (The Choices):</strong></p>
+            <ol>
+                <li>Red</li><li>Blue</li><li>Green</li><li>Yellow</li><li>Pink</li>
+                <li>Purple</li><li>Orange</li><li>Black</li><li>White</li><li>Brown</li>
+            </ol>
+        </div>
+        <p>Why exactly 10 items? This keeps our data manageable and consistent for the whole class!</p>
+    </section>
+
+    <!-- Section 3: Design -->
+    <section id="section3" class="lesson-section">
+        <span class="timer">20 Minutes</span>
+        <h2>3. Designing Your Investigation</h2>
+        <p>Work with a partner to choose your focus. Select <strong>exactly 10 items</strong>.</p>
+        
+        <label>Pick a Topic:</label>
+        <select id="topicSelect" style="width:100%; padding: 8px; margin-bottom: 15px;">
+            <option>Books</option>
+            <option>Sport</option>
+            <option>Places</option>
+            <option>Food</option>
+            <option>Animals</option>
+            <option>TV Programmes</option>
+        </select>
+
+        <h3>Item Selection (List 10)</h3>
+        <div class="data-grid">
+            <input type="text" placeholder="Item 1"> <input type="text" placeholder="Item 2">
+            <input type="text" placeholder="Item 3"> <input type="text" placeholder="Item 4">
+            <input type="text" placeholder="Item 5"> <input type="text" placeholder="Item 6">
+            <input type="text" placeholder="Item 7"> <input type="text" placeholder="Item 8">
+            <input type="text" placeholder="Item 9"> <input type="text" placeholder="Item 10">
+        </div>
+
+        <p><strong>Crucial Instruction:</strong> "Choose one item only." Why is this important? (Discuss with your partner).</p>
+    </section>
+
+    <!-- Section 4: Form Construction -->
+    <section id="section4" class="lesson-section">
+        <span class="timer">20 Minutes</span>
+        <h2>4. Construct Your Data Capture Form</h2>
+        <p>Now, build the actual form that your <strong>Respondents</strong> will fill out.</p>
+        
+        <div class="form-builder">
+            <label>Prompt Statement (e.g., "My favorite animal is...")</label>
+            <input type="text" id="finalStatement" placeholder="Enter your prompt statement here">
+            
+            <label>Instructions for Respondent:</label>
+            <input type="text" value="Please tick one box only." readonly>
+            
+            <p><em>Check for spelling mistakes! Is the form easy to read?</em></p>
+        </div>
+    </section>
+
+    <!-- Section 5: Wrap-up -->
+    <section id="section5" class="lesson-section">
+        <span class="timer">10 Minutes</span>
+        <h2>5. Reflection & Verification</h2>
+        <div class="reflection-card">
+            <h3>Final Checklist:</h3>
+            <ul>
+                <li>Is my topic clear?</li>
+                <li>Do I have exactly 10 data items?</li>
+                <li>Is there a clear statement for the respondent?</li>
+                <li>Are there instructions?</li>
+            </ul>
+        </div>
+        
+        <h3>Designer's Notes</h3>
+        <textarea id="reflectionNotes" rows="5" placeholder="Record ideas or reflections on the design process here..."></textarea>
+        
+        <div style="text-align: center; margin-top: 1rem;">
+            <button class="btn" onclick="finishLesson()" style="background: var(--success);">Complete Lesson</button>
+        </div>
+    </section>
+
+    <div class="navigation">
+        <button id="prevBtn" class="btn btn-prev" onclick="changeSection(-1)">Previous</button>
+        <button id="nextBtn" class="btn" onclick="changeSection(1)">Next</button>
+    </div>
+</main>
+
+<script>
+    let currentSection = 1;
+    const totalSections = 5;
+
+    function updateUI() {
+        // Hide all sections
+        document.querySelectorAll('.lesson-section').forEach(sec => sec.classList.remove('active'));
+        // Show current
+        document.getElementById('section' + currentSection).classList.add('active');
+
+        // Update progress bar
+        const progress = ((currentSection - 1) / (totalSections - 1)) * 100;
+        document.getElementById('progress-bar').style.width = progress + '%';
+
+        // Update buttons
+        document.getElementById('prevBtn').style.visibility = (currentSection === 1) ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').innerText = (currentSection === totalSections) ? 'Finish' : 'Next';
+        if(currentSection === totalSections) {
+             document.getElementById('nextBtn').style.display = 'none';
+        } else {
+             document.getElementById('nextBtn').style.display = 'block';
+        }
+    }
+
+    function changeSection(delta) {
+        currentSection += delta;
+        if (currentSection < 1) currentSection = 1;
+        if (currentSection > totalSections) currentSection = totalSections;
+        updateUI();
+        window.scrollTo(0,0);
+    }
+
+    function finishLesson() {
+        alert("Well done! Your Data Capture Form is ready for the next session. Make sure to save your notes!");
+    }
+
+    // Initial setup
+    updateUI();
+</script>
+
+</body>
+</html>
