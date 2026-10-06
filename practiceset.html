@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Science Quiz</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f4f7;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #222;
+    }
+
+    h2 {
+        margin-top: 30px;
+        color: #333;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 8px;
+    }
+
+    .question {
+        margin: 25px 0;
+        padding: 18px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #4CAF50;
+    }
+
+    .question p {
+        font-weight: bold;
+        margin-top: 0;
+    }
+
+    label {
+        display: block;
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    label:hover {
+        background: #e9ecef;
+        border-radius: 5px;
+    }
+
+    button {
+        display: block;
+        margin: 30px auto 10px;
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #388E3C;
+    }
+
+    #result {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 20px;
+    }
+
+    .answer {
+        background: #e8f5e9;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 6px;
+    }
+
+    .short-answer {
+        margin: 25px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .short-answer h3 {
+        color: #333;
+    }
+
+    .diagram {
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: monospace;
+        white-space: pre;
+        overflow-x: auto;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Computer Science Quiz</h1>
+
+    <h2>Group A: Multiple Choice Questions</h2>
+
+    <div id="mcqContainer"></div>
+
+    <button onclick="checkAnswers()">Submit Answers</button>
+
+    <div id="result"></div>
+
+    <h2>Group B: Short Answer Questions</h2>
+
+    <div id="shortQuestions"></div>
+
+</div>
+
+
+<script>
+
+// ==========================================
+// MULTIPLE CHOICE QUESTIONS
+// ==========================================
+
+const questions = [
+
+    {
+        question: "A character in Scratch is called:",
+        options: ["Sprite", "Stage", "Block", "Script"],
+        answer: "Sprite"
+    },
+
+    {
+        question: "The background of the Stage is called:",
+        options: ["Sprite", "Costume", "Backdrop", "Block"],
+        answer: "Backdrop"
+    },
+
+    {
+        question: "What is the full form of ALU?",
+        options: [
+            "Arithmetic Logic Unit",
+            "Advanced Logic Unit",
+            "Arithmetic Local Unit",
+            "Automatic Logic Unit"
+        ],
+        answer: "Arithmetic Logic Unit"
+    },
+
+    {
+        question: "Which memory is temporary and loses its data when the computer is turned off?",
+        options: [
+            "ROM",
+            "RAM",
+            "Hard Disk",
+            "SSD"
+        ],
+        answer: "RAM"
+    },
+
+    {
+        question: "Which unit of the CPU performs arithmetic and logical operations?",
+        options: [
+            "Control Unit",
+            "ALU",
+            "RAM",
+            "ROM"
+        ],
+        answer: "ALU"
+    },
+
+    {
+        question: "Which of the following is an output device?",
+        options: [
+            "Keyboard",
+            "Mouse",
+            "Monitor",
+            "Scanner"
+        ],
+        answer: "Monitor"
+    },
+
+    {
+        question: "What is the full form of CPU?",
+        options: [
+            "Central Process Unit",
+            "Central Processing Unit",
+            "Computer Processing Unit",
+            "Central Program Unit"
+        ],
+        answer: "Central Processing Unit"
+    },
+
+    {
+        question: "Which of the following is a secondary storage device?",
+        options: [
+            "RAM",
+            "Register",
+            "Hard Disk",
+            "Cache"
+        ],
+        answer: "Hard Disk"
+    },
+
+    {
+        question: "Which part of the CPU controls and coordinates the activities of the computer?",
+        options: [
+            "ALU",
+            "Control Unit",
+            "RAM",
+            "Hard Disk"
+        ],
+        answer: "Control Unit"
+    },
+
+    {
+        question: "Which of the following shows the basic working process of a computer?",
+        options: [
+            "Input → Process → Output",
+            "Output → Input → Process",
+            "Process → Input → Output",
+            "Input → Output → Process"
+        ],
+        answer: "Input → Process → Output"
+    },
+
+    // ==========================================
+    // 10 ADDITIONAL SIMILAR MCQs
+    // ==========================================
+
+    {
+        question: "Which device is mainly used to enter text into a computer?",
+        options: [
+            "Monitor",
+            "Keyboard",
+            "Printer",
+            "Speaker"
+        ],
+        answer: "Keyboard"
+    },
+
+    {
+        question: "Which device is used to print information on paper?",
+        options: [
+            "Scanner",
+            "Monitor",
+            "Printer",
+            "Mouse"
+        ],
+        answer: "Printer"
+    },
+
+    {
+        question: "Which of the following is an input device?",
+        options: [
+            "Monitor",
+            "Printer",
+            "Keyboard",
+            "Speaker"
+        ],
+        answer: "Keyboard"
+    },
+
+    {
+        question: "Which memory is permanent and normally stores important instructions for starting a computer?",
+        options: [
+            "RAM",
+            "ROM",
+            "Cache",
+            "Register"
+        ],
+        answer: "ROM"
+    },
+
+    {
+        question: "Which device is used to move the pointer on a computer screen?",
+        options: [
+            "Mouse",
+            "Printer",
+            "Speaker",
+            "Projector"
+        ],
+        answer: "Mouse"
+    },
+
+    {
+        question: "Which of the following is used to display visual information?",
+        options: [
+            "Keyboard",
+            "Mouse",
+            "Monitor",
+            "Scanner"
+        ],
+        answer: "Monitor"
+    },
+
+    {
+        question: "Which component is known as the brain of the computer?",
+        options: [
+            "Monitor",
+            "CPU",
+            "Keyboard",
+            "Printer"
+        ],
+        answer: "CPU"
+    },
+
+    {
+        question: "Which Scratch block category is commonly used to detect touching and mouse position?",
+        options: [
+            "Looks",
+            "Sensing",
+            "Sound",
+            "Events"
+        ],
+        answer: "Sensing"
+    },
+
+    {
+        question: "In Scratch, what is used to change the appearance of a sprite?",
+        options: [
+            "Costume",
+            "Backdrop",
+            "Stage",
+            "Variable"
+        ],
+        answer: "Costume"
+    },
+
+    {
+        question: "Which of the following is used for long-term storage of large amounts of data?",
+        options: [
+            "RAM",
+            "Register",
+            "Hard Disk",
+            "Cache"
+        ],
+        answer: "Hard Disk"
+    }
+
+];
+
+
+// ==========================================
+// DISPLAY MCQs
+// ==========================================
+
+const mcqContainer = document.getElementById("mcqContainer");
+
+questions.forEach(function(q, index) {
+
+    let questionHTML = `
+        <div class="question">
+            <p>${index + 1}. ${q.question}</p>
+    `;
+
+    q.options.forEach(function(option, optionIndex) {
+
+        questionHTML += `
+            <label>
+                <input 
+                    type="radio" 
+                    name="question${index}" 
+                    value="${option}"
+                >
+                ${String.fromCharCode(97 + optionIndex)}) ${option}
+            </label>
+        `;
+
+    });
+
+    questionHTML += `</div>`;
+
+    mcqContainer.innerHTML += questionHTML;
+
+});
+
+
+// ==========================================
+// CHECK ANSWERS
+// ==========================================
+
+function checkAnswers() {
+
+    let score = 0;
+
+    questions.forEach(function(q, index) {
+
+        const selected = document.querySelector(
+            `input[name="question${index}"]:checked`
+        );
+
+        if (selected && selected.value === q.answer) {
+            score++;
+        }
+
+    });
+
+    document.getElementById("result").innerHTML =
+        "Your Score: " + score + " / " + questions.length;
+
+}
+
+
+// ==========================================
+// SHORT ANSWER QUESTIONS
+// ==========================================
+
+const shortQuestions = [
+
+    {
+        question: "What is a backdrop? What is the use of Sensing blocks in Scratch?",
+        answer: `
+            <b>Backdrop:</b> A backdrop is the background of the Stage in Scratch.
+            It is used to set the scene or environment for a Scratch project.
+            <br><br>
+
+            <b>Sensing blocks:</b> Sensing blocks are used to detect information
+            such as touching another sprite, mouse position, keyboard input,
+            and distance.
+        `
+    },
+
+    {
+        question: "Draw a Diagram of a Computer System Architecture.",
+        answer: `
+            <div class="diagram">
+                 ┌──────────────────┐
+                 │    Input Unit    │
+                 └────────┬─────────┘
+                          ↓
+                 ┌──────────────────┐
+                 │       CPU        │
+                 │ ┌──────────────┐ │
+                 │ │ Control Unit │ │
+                 │ ├──────────────┤ │
+                 │ │     ALU      │ │
+                 │ └──────────────┘ │
+                 └────────┬─────────┘
+                          ↕
+                 ┌──────────────────┐
+                 │   Memory Unit    │
+                 └────────┬─────────┘
+                          ↓
+                 ┌──────────────────┐
+                 │   Output Unit    │
+                 └──────────────────┘
+            </div>
+        `
+    },
+
+    {
+        question: "Explain different units of a computer system.",
+        answer: `
+            <b>1. Input Unit:</b> It takes data and instructions from the user.
+            Examples: keyboard and mouse.
+            <br><br>
+
+            <b>2. CPU:</b> It processes data and controls the activities of the computer.
+            <br>
+            <b>ALU:</b> Performs arithmetic and logical operations.
+            <br>
+            <b>Control Unit:</b> Controls and coordinates computer activities.
+            <br><br>
+
+            <b>3. Memory Unit:</b> Stores data, instructions and results.
+            <br><br>
+
+            <b>4. Output Unit:</b> Displays or produces the processed result.
+            Examples: monitor and printer.
+        `
+    },
+
+    {
+        question: "What is computer memory? Give some examples of memory devices used in computer.",
+        answer: `
+            <b>Computer memory</b> is the storage area of a computer where
+            data, instructions and results are stored.
+            <br><br>
+
+            <b>Examples:</b>
+            <ul>
+                <li>RAM</li>
+                <li>ROM</li>
+                <li>Cache memory</li>
+                <li>Hard disk</li>
+                <li>SSD</li>
+                <li>Pen drive</li>
+                <li>Memory card</li>
+            </ul>
+        `
+    },
+
+    {
+        question: "What are the characteristics of a computer?",
+        answer: `
+            The main characteristics of a computer are:
+            <ol>
+                <li><b>Speed:</b> Performs operations very quickly.</li>
+                <li><b>Accuracy:</b> Produces accurate results when correct data and instructions are given.</li>
+                <li><b>Storage:</b> Stores a large amount of data.</li>
+                <li><b>Diligence:</b> Performs repeated tasks without getting tired.</li>
+                <li><b>Versatility:</b> Performs many different types of tasks.</li>
+                <li><b>Automation:</b> Performs tasks automatically according to instructions.</li>
+            </ol>
+        `
+    }
+
+];
+
+
+// ==========================================
+// DISPLAY SHORT QUESTIONS
+// ==========================================
+
+const shortContainer = document.getElementById("shortQuestions");
+
+shortQuestions.forEach(function(q, index) {
+
+    shortContainer.innerHTML += `
+        <div class="short-answer">
+
+            <h3>${index + 11}. ${q.question}</h3>
+
+            <div class="answer">
+                ${q.answer}
+            </div>
+
+        </div>
+    `;
+
+});
+
+</script>
+
+</body>
+</html>
